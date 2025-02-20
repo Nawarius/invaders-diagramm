@@ -1,10 +1,15 @@
 <script setup>
     import MainCamera from '@/Cameras/MainCamera'
     import RingDiagramm from '@/Diagramm/RingDiagramm'
-import RingRaycaster from '@/Raycast/RingRaycaster'
-import TextMesh from '@/Text3D/TextMesh'
+    import RingRaycaster from '@/Raycast/RingRaycaster'
+    import TextMesh from '@/Text3D/TextMesh'
     import * as THREE from 'three'
-    import { ref, onMounted } from 'vue'
+    import { ref, onMounted, watch } from 'vue'
+
+    const props = defineProps({
+        numbersArr: Array,
+        toggleButton: Boolean
+    })
 
     const target = ref()
 
@@ -49,6 +54,10 @@ import TextMesh from '@/Text3D/TextMesh'
     onMounted(() => {
         target.value.appendChild(renderer.domElement)
         animate()
+    })
+
+    watch(() => props.toggleButton, () => {
+        console.log('Here')
     })
 
 </script>

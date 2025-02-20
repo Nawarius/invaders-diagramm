@@ -1,12 +1,56 @@
 <script setup>
 import ThreeScene from './components/ThreeScene.vue'
+import { ref } from 'vue'
+import { isValidInput } from './utils/input.utils'
+
+const inputVal = ref('')
+const inputRef = ref(null)
+
+const numbersArr = ref([])
+const toggleButton = ref(false)
+
+function onChangeInput () {
+    if (!inputRef.value) return
+
+    const str = inputRef.value.value
+    const isValid = isValidInput(str)
+
+    if (!isValid) {
+        inputRef.value.value = str.slice(0, -1)
+        return
+    }
+
+    inputVal.value = inputRef.value.value
+
+    const arr = inputVal.value.split(',').map(item => Number(item))
+    if (!arr.length) return
+
+    numbersArr.value = arr
+}
+
+function recreateDiagramm () {
+    if (inputRef.value) {
+        inputRef.value.value = ''
+        toggleButton.value = !toggleButton.value
+    }
+}
+
 </script>
 
 <template>
-  <ThreeScene />
+    <div class = 'input_class'>
+        <input :value = "inputVal" @input="onChangeInput" ref = "inputRef" />
+        <button @click="recreateDiagramm">Пуск</button>
+    </div>
+    <ThreeScene :numbersArr = "numbersArr" :toggleButton = "toggleButton" />
 </template>
 
 <style>
+.input_class {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
 * {
     margin: 0px;
     padding: 0px;
