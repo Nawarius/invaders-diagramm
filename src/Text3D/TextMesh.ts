@@ -19,7 +19,7 @@ class TextMesh {
         this.font = await this.loader.loadAsync('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json')
 
         this._createTextMesh('Click')
-        this.updateTextMesh()
+        this.updateTextDimensions()
     }
 
     _createTextMesh (text: string) {
@@ -36,7 +36,7 @@ class TextMesh {
         this.scene.add(this.textMesh)
     }
 
-    updateTextMesh () {
+    updateTextDimensions () {
         const bbox = new THREE.Box3().setFromObject(this.textMesh)
         
         const sizes = {
@@ -46,6 +46,17 @@ class TextMesh {
 
         this.textMesh.position.x -= sizes.width / 2
         this.textMesh.position.y -= sizes.height / 2
+    }
+
+    setNewText (text: string) {
+        this.textMesh.geometry.dispose()
+
+        this.textMesh.geometry = new TextGeometry(text, { font: this.font, depth: 5 })
+        this.textMesh.geometry.computeBoundingBox()
+
+        this.textMesh.position.set(0, 0, 0)
+
+        this.updateTextDimensions()
     }
 }
 

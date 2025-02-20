@@ -1,6 +1,7 @@
 <script setup>
     import MainCamera from '@/Cameras/MainCamera'
     import RingDiagramm from '@/Diagramm/RingDiagramm'
+import RingRaycaster from '@/Raycast/RingRaycaster'
 import TextMesh from '@/Text3D/TextMesh'
     import * as THREE from 'three'
     import { ref, onMounted } from 'vue'
@@ -28,7 +29,18 @@ import TextMesh from '@/Text3D/TextMesh'
 
     const TextMeshInst = new TextMesh(scene)
     TextMeshInst.init()
-    
+
+    const RingRaycasterInst = new RingRaycaster(scene)
+    RingRaycasterInst.onClickSector.add(sectorMesh => {
+        const sectorArrNumber = sectorMesh.userData.sectorArrNumber
+
+        TextMeshInst.setNewText(sectorArrNumber.toString())
+    })
+
+    window.addEventListener('pointerdown', e => {
+        RingRaycasterInst.checkIntersects(e, MainCameraInst.getCamera())
+    })
+
     function animate () {
         renderer.render(scene, MainCameraInst.getCamera())
         MainCameraInst.getOrbit().update()

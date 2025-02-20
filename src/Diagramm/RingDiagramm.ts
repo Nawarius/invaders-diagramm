@@ -28,7 +28,8 @@ class RingDiagramm {
             const endAngle = ((i + 1) / this.sectorsCount) * Math.PI * 2
 
             const sector = this._createSectorMesh(startAngle, endAngle, this.colors[i])
-            sector.userData.diagrammNumber = this.diagrammNumbersArr[i]
+            sector.name = `Sector_${i}`
+            sector.userData.sectorArrNumber = this.diagrammNumbersArr[i]
 
             this.scene.add(sector)
         }
