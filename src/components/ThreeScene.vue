@@ -1,6 +1,7 @@
 <script setup>
     import MainCamera from '@/Cameras/MainCamera'
     import RingDiagramm from '@/Diagramm/RingDiagramm'
+import TextMesh from '@/Text3D/TextMesh'
     import * as THREE from 'three'
     import { ref, onMounted } from 'vue'
 
@@ -25,6 +26,9 @@
     const RingDiagrammInst = new RingDiagramm(scene, arr)
     RingDiagrammInst.createSectors()
 
+    const TextMeshInst = new TextMesh(scene)
+    TextMeshInst.init()
+    
     function animate () {
         renderer.render(scene, MainCameraInst.getCamera())
         MainCameraInst.getOrbit().update()
