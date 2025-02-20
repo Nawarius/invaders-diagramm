@@ -13,14 +13,6 @@
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setAnimationLoop(animate)
 
-    const geometry = new THREE.BoxGeometry( 0.5, 0.5, 0.5 );
-    const cube = new THREE.Mesh(geometry);
-    
-    const pos = new THREE.Vector3(0, 0, 0)
-    cube.position.set(pos.x, pos.y, pos.z)
-
-    scene.add(cube)
-
     const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 5 )
     scene.add(light)
 
@@ -42,7 +34,7 @@
         target.value.appendChild(renderer.domElement)
         animate()
     })
-    
+
 </script>
 
 <template>

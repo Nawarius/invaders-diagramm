@@ -3,7 +3,7 @@ import * as THREE from 'three'
 class RingDiagramm {
 
     public colors: any = []
-    public meshes: Array<THREE.Mesh> = []
+    public meshes: Array<any> = []
 
     public sectorsCount: number = 0
     public diagrammNumbersArr: Array<number> = []
@@ -29,10 +29,8 @@ class RingDiagramm {
 
             const sector = this._createSectorMesh(startAngle, endAngle, this.colors[i])
             sector.userData.diagrammNumber = this.diagrammNumbersArr[i]
-    
-            this.scene.add(sector)
 
-            console.log(sector)
+            this.scene.add(sector)
         }
     }
 
@@ -67,8 +65,15 @@ class RingDiagramm {
         return sectorMesh
     }
 
+    removeSectors () {
+        for (let mesh of this.meshes) {
+            mesh.geometry.dispose()
+            mesh.material.dispose()
+            this.scene.remove(mesh)
+        }
 
-
+        this.meshes = []
+    }
 
 }
 
