@@ -19,15 +19,22 @@ class RingDiagramm {
         const sectorsCount = diagrammArr.length
         this._createRandomColors(sectorsCount)
 
+        const sum = diagrammArr.reduce((acc, item) => acc += item, 0)
+        let prevEndAngle = 0
+
         for (let i = 0; i < sectorsCount; i++) {
-            const startAngle = (i / sectorsCount) * Math.PI * 2
-            const endAngle = ((i + 1) / sectorsCount) * Math.PI * 2
+            const percent = diagrammArr[i] / sum
+
+            const startAngle = prevEndAngle
+            const endAngle = prevEndAngle + (percent * Math.PI * 2)
 
             const sector = this._createSectorMesh(startAngle, endAngle, this.colors[i])
             sector.name = `Sector_${i}`
-            sector.userData.sectorArrNumber = diagrammArr[i]
+            sector.userData.sectorArrPercent = `${(percent * 100).toFixed(1)}%`
 
             this.scene.add(sector)
+
+            prevEndAngle = endAngle
         }
     }
 

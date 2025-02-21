@@ -37,9 +37,9 @@
 
     const RingRaycasterInst = new RingRaycaster(scene)
     RingRaycasterInst.onClickSector.add(sectorMesh => {
-        const sectorArrNumber = sectorMesh.userData.sectorArrNumber
+        const sectorArrPercent = sectorMesh.userData.sectorArrPercent
 
-        if (TextMeshInst.isTextMeshExist()) TextMeshInst.setNewText(sectorArrNumber.toString())
+        if (TextMeshInst.isTextMeshExist()) TextMeshInst.setNewText(sectorArrPercent.toString())
     })
 
     window.addEventListener('pointerdown', e => {
