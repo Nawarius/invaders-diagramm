@@ -64,6 +64,10 @@ class TextMesh {
         const {x, y, z} = this.defaultPos
         this.textMesh.position.set(x, y, z)
     }
+
+    isTextMeshExist () {
+        return !!this.textMesh
+    }
 }
 
 export default TextMesh
