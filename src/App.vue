@@ -1,7 +1,7 @@
 <script setup>
 import ThreeScene from './components/ThreeScene.vue'
 import { ref } from 'vue'
-import { isValidInput } from './utils/input.utils'
+import { isEmptyInput, isValidInput } from './utils/input.utils'
 
 const inputVal = ref('')
 const inputRef = ref(null)
@@ -21,18 +21,19 @@ function onChangeInput () {
     }
 
     inputVal.value = inputRef.value.value
-
-    const arr = inputVal.value.split(',').map(item => Number(item))
-    if (!arr.length) return
-
-    numbersArr.value = arr
 }
 
 function recreateDiagramm () {
-    if (inputRef.value) {
-        inputRef.value.value = ''
-        toggleButton.value = !toggleButton.value
+    const isEmpty = isEmptyInput(inputVal.value)
+
+    if (isEmpty) {
+        numbersArr.value = []
+    } else {
+        const arr = inputVal.value.split(',').map(item => Number(item))
+        numbersArr.value = arr
     }
+
+    toggleButton.value = !toggleButton.value
 }
 
 </script>

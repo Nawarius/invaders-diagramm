@@ -32,10 +32,9 @@ class TextMesh {
 
         this.textMesh = new THREE.Mesh(geometry)
         this.textMesh.name = 'textMesh'
-
+        this._setDefaultPosition()
         this.textMesh.scale.set(0.01, 0.01, 0.01)
         
-        this._setDefaultPosition()
         this.scene.add(this.textMesh)
     }
 

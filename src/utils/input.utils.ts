@@ -9,3 +9,7 @@ export function isValidInput (val: string) {
     if ((isComma || !isNan) && !isWhitespace) return true
     return false
 }
+
+export function isEmptyInput (val: string) {
+    return val === ''
+}
