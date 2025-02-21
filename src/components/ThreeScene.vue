@@ -64,6 +64,14 @@
         RingDiagrammInst.createSectors(props.numbersArr)
     })
 
+    window.addEventListener('resize', () => {
+        MainCameraInst.getCamera().aspect = window.innerWidth / window.innerHeight
+        MainCameraInst.getCamera().updateProjectionMatrix()
+        
+        renderer.setSize(window.innerWidth, window.innerHeight)
+    })
+
+
 </script>
 
 <template>
