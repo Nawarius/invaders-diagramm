@@ -11,6 +11,8 @@ class TextMesh {
 
     private textMesh: any = null 
 
+    public defaultPos: any = { x: 0, y: 0, z: 1.5 }
+
     constructor (scene: THREE.Scene) {
         this.scene = scene
     }
@@ -19,7 +21,7 @@ class TextMesh {
         this.font = await this.loader.loadAsync('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json')
 
         this._createTextMesh('Click')
-        this.updateTextDimensions()
+        this._updateTextDimensions()
     }
 
     _createTextMesh (text: string) {
@@ -29,14 +31,25 @@ class TextMesh {
         geometry.computeBoundingBox()
 
         this.textMesh = new THREE.Mesh(geometry)
-        this.textMesh.position.set(0, 0, 0)
-        this.textMesh.scale.set(0.01, 0.01, 0.01)
         this.textMesh.name = 'textMesh'
 
+        this.textMesh.scale.set(0.01, 0.01, 0.01)
+        
+        this._setDefaultPosition()
         this.scene.add(this.textMesh)
     }
 
-    updateTextDimensions () {
+    public setNewText (text: string) {
+        this.textMesh.geometry.dispose()
+
+        this.textMesh.geometry = new TextGeometry(text, { font: this.font, depth: 5 })
+        this.textMesh.geometry.computeBoundingBox()
+
+        this._setDefaultPosition()
+        this._updateTextDimensions()
+    }
+
+    private _updateTextDimensions () {
         const bbox = new THREE.Box3().setFromObject(this.textMesh)
         
         const sizes = {
@@ -48,15 +61,9 @@ class TextMesh {
         this.textMesh.position.y -= sizes.height / 2
     }
 
-    setNewText (text: string) {
-        this.textMesh.geometry.dispose()
-
-        this.textMesh.geometry = new TextGeometry(text, { font: this.font, depth: 5 })
-        this.textMesh.geometry.computeBoundingBox()
-
-        this.textMesh.position.set(0, 0, 0)
-
-        this.updateTextDimensions()
+    private _setDefaultPosition () {
+        const {x, y, z} = this.defaultPos
+        this.textMesh.position.set(x, y, z)
     }
 }
 

@@ -29,8 +29,8 @@
     const str = '16,22,58,2,7'
     const arr = str.trim().split(',').map(item => Number(item))
 
-    const RingDiagrammInst = new RingDiagramm(scene, arr)
-    RingDiagrammInst.createSectors()
+    const RingDiagrammInst = new RingDiagramm(scene)
+    RingDiagrammInst.createSectors(arr)
 
     const TextMeshInst = new TextMesh(scene)
     TextMeshInst.init()
@@ -57,7 +57,11 @@
     })
 
     watch(() => props.toggleButton, () => {
-        console.log('Here')
+        if (!props.numbersArr.length) TextMeshInst.setNewText('Oh no, so sad :(')
+        else TextMeshInst.setNewText('Click')
+
+        RingDiagrammInst.removeSectors()
+        RingDiagrammInst.createSectors(props.numbersArr)
     })
 
 </script>
