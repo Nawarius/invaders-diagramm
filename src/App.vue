@@ -29,8 +29,13 @@ function recreateDiagramm () {
     if (isEmpty) {
         numbersArr.value = []
     } else {
-        const arr = inputVal.value.split(',').map(item => Number(item))
-        numbersArr.value = arr
+        const filtered = inputVal.value.split(',').filter(item => item && !item.startsWith('0', 0)).map(item => Number(item))
+        const newInputValue = filtered.join(',')
+
+        numbersArr.value = filtered.map(item => Number(item))
+
+        inputRef.value.value = newInputValue
+        inputVal.value = inputRef.value.value
     }
 
     toggleButton.value = !toggleButton.value
