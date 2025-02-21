@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 class RingDiagramm {
 
-    public colors: any = []
+    public colors: Array<any> = []
     public meshes: Array<any> = []
 
     private segments: number = 128
@@ -13,11 +13,11 @@ class RingDiagramm {
 
     constructor (scene: THREE.Scene) {
         this.scene = scene
-        this.colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff]
     }
 
     createSectors (diagrammArr: Array<number>) {
         const sectorsCount = diagrammArr.length
+        this._createRandomColors(sectorsCount)
 
         for (let i = 0; i < sectorsCount; i++) {
             const startAngle = (i / sectorsCount) * Math.PI * 2
@@ -70,6 +70,17 @@ class RingDiagramm {
         }
 
         this.meshes = []
+        this.colors = []
+    }
+
+    private _createRandomColors (colorsCount: number) {
+        for (let i = 0; i < colorsCount; i++) {
+            const r = Math.random()
+            const g = Math.random()
+            const b = Math.random()
+
+            this.colors.push(new THREE.Color(r, g, b))
+        }
     }
 
 }
